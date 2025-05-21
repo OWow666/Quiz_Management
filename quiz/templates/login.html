@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+</head>
+<body>
+    <div class="container">
+        <h2>用户登录</h2>
+        {% if form.errors %}
+            <div class="error">
+                <p>用户名或密码错误</p>
+            </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="{{ form.username.id_for_label }}">用户名：</label>
+            {{ form.username }}
+            <br>
+            <label for="{{ form.password.id_for_label }}">密码：</label>
+            {{ form.password }}
+            <br>
+            <button type="submit">登录</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室安全题库刷题软件</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>刷题软件</h1>
+
+        {% if user.is_authenticated %}
+            <p>欢迎，{{ user.username }} | <a href="{% url 'logout' %}">退出</a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}">登录</a> | <a href="{% url 'register' %}">注册</a></p>
+        {% endif %}
+
+        <!-- 选择界面 -->
+        <div id="menu">
+            <div class="menu">
+                <button class="menu-button" onclick="startQuiz('general')">开始刷题</button>
+                {% if user.is_authenticated %}
+                    <button class="menu-button" onclick="startQuiz('wrong')">刷错题</button>
+                {% else %}
+                    <button class="menu-button" onclick="not_login_wrong()">刷错题</button>
+                {% endif %}
+                <button id="clear-btn" class="btn-danger">重置所有题目</button>
+            </div>
+        </div>
+
+        <!-- 刷题界面 -->
+        <div id="quiz-container" class="quiz-container">
+            <div class="question" id="question">题目加载中...</div>
+            <div class="options" id="options"></div>
+            <div class="submit-container">
+                <button class="submit-button" onclick="submitAnswer()">提交答案</button>
+                <button class="next-button" onclick="nextQuestion()" disabled id="next-btn">下一题</button>
+                <button class="end-button" onclick="endQuiz()" id="end-btn">结束刷题</button>
+            </div>
+            <div id="feedback" class="feedback hidden"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
